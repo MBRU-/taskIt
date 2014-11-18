@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		735F1BD01A1A2AD400CCBCC9 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735F1BCF1A1A2AD400CCBCC9 /* TaskModel.swift */; };
+		735F1BD21A1A306900CCBCC9 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735F1BD11A1A306900CCBCC9 /* TaskDetailViewController.swift */; };
+		735F1BD41A1A487800CCBCC9 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735F1BD31A1A487800CCBCC9 /* Date.swift */; };
+		735F1BD81A1B4AA800CCBCC9 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735F1BD71A1B4AA800CCBCC9 /* AddTaskViewController.swift */; };
 		73D5F80B1A14E3530055549F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D5F80A1A14E3530055549F /* AppDelegate.swift */; };
 		73D5F80D1A14E3530055549F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D5F80C1A14E3530055549F /* ViewController.swift */; };
 		73D5F8101A14E3530055549F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73D5F80E1A14E3530055549F /* Main.storyboard */; };
@@ -27,6 +31,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		735F1BCF1A1A2AD400CCBCC9 /* TaskModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskModel.swift; path = ../TaskModel.swift; sourceTree = "<group>"; };
+		735F1BD11A1A306900CCBCC9 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		735F1BD31A1A487800CCBCC9 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		735F1BD71A1B4AA800CCBCC9 /* AddTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddTaskViewController.swift; path = ../AddTaskViewController.swift; sourceTree = "<group>"; };
 		73D5F8051A14E3530055549F /* taskIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = taskIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D5F8091A14E3530055549F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		73D5F80A1A14E3530055549F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,9 +87,13 @@
 		73D5F8071A14E3530055549F /* taskIt */ = {
 			isa = PBXGroup;
 			children = (
+				735F1BCF1A1A2AD400CCBCC9 /* TaskModel.swift */,
 				73D5F82C1A14EE070055549F /* TaskCell.swift */,
 				73D5F80A1A14E3530055549F /* AppDelegate.swift */,
 				73D5F80C1A14E3530055549F /* ViewController.swift */,
+				735F1BD11A1A306900CCBCC9 /* TaskDetailViewController.swift */,
+				735F1BD71A1B4AA800CCBCC9 /* AddTaskViewController.swift */,
+				735F1BD31A1A487800CCBCC9 /* Date.swift */,
 				73D5F80E1A14E3530055549F /* Main.storyboard */,
 				73D5F8111A14E3530055549F /* Images.xcassets */,
 				73D5F8131A14E3530055549F /* LaunchScreen.xib */,
@@ -216,8 +228,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				73D5F80D1A14E3530055549F /* ViewController.swift in Sources */,
+				735F1BD41A1A487800CCBCC9 /* Date.swift in Sources */,
 				73D5F82D1A14EE070055549F /* TaskCell.swift in Sources */,
+				735F1BD01A1A2AD400CCBCC9 /* TaskModel.swift in Sources */,
 				73D5F80B1A14E3530055549F /* AppDelegate.swift in Sources */,
+				735F1BD21A1A306900CCBCC9 /* TaskDetailViewController.swift in Sources */,
+				735F1BD81A1B4AA800CCBCC9 /* AddTaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +427,7 @@
 				73D5F8261A14E3530055549F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73D5F8271A14E3530055549F /* Build configuration list for PBXNativeTarget "taskItTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +436,7 @@
 				73D5F8291A14E3530055549F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
