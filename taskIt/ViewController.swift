@@ -8,42 +8,27 @@
 
 import UIKit
 import Foundation
+import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     
-
-  //  var taskArray:[TaskModel] = []
     
-    var baseArray:[[TaskModel]] = []
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+    var fechedResultsController:NSFetchedResultsController = NSFetchedResultsController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let date1 = Date.from(year: 2015, month: 01, day: 02)
-        let date2 = Date.from(year: 2015, month: 01, day: 03)
-        let date3 = Date.from(year: 2015, month: 01, day: 04)
+        fechedResultsController = getFetchedResultsController()
+        fechedResultsController.delegate = self
+        fechedResultsController.performFetch(nil)
         
-        let task1 = TaskModel(task: "Study French", subTask: "Verbs", date: date1, completed: false)
-        let task2 = TaskModel(task: "Eat Dinner", subTask: "Burgers", date: date2, completed: false)
-       
-        let taskArray = [task1, task2, TaskModel(task: "Gym", subTask: "Leg Day", date: date3, completed: false)]
-        var completedArray = [TaskModel(task: "Code", subTask: "Task Project", date: date2, completed: true)]
-       
-        baseArray = [taskArray, completedArray]
-        
-        self.tableView.reloadData()
-
     }
 
     override  func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-
-        baseArray[0] = baseArray[0].sorted{( taskOne: TaskModel, taskTwo: TaskModel) -> Bool in
-            return taskOne.date.timeIntervalSince1970 >  taskTwo.date.timeIntervalSince1970
-        }
-        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,12 +39,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //UITableViewDataSource
     
     func  numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return baseArray.count
+        return fechedResultsController.sections!.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        println("Count: \(taskArray.count)")
-        return baseArray[section].count
+        return fechedResultsController.sections![section].numberOfObjects
 
     }
     
@@ -69,21 +54,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if segue.identifier == "showTaskDetail" {
             let detailVC: TaskDetailViewController = segue.destinationViewController as TaskDetailViewController
             let indexPath = self.tableView.indexPathForSelectedRow()
-            let thisTask = baseArray[indexPath!.section][indexPath!.row]
+            let thisTask = fechedResultsController.objectAtIndexPath(indexPath!) as TaskModel
+            
             detailVC.detailTaskModel = thisTask
-            detailVC.mainVC = self
             
         }
-        else if segue.identifier == "showTaskAdd" {
-            let addTaskVC: AddTaskViewController = segue.destinationViewController as AddTaskViewController
-            addTaskVC.mainVC = self
-        }
+//        else if segue.identifier == "showTaskAdd" {
+//            let addTaskVC: AddTaskViewController = segue.destinationViewController as AddTaskViewController
+//        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: TaskCell = tableView.dequeueReusableCellWithIdentifier("myCell") as TaskCell
-        let theTask = baseArray[indexPath.section][indexPath.row]
+        let theTask = fechedResultsController.objectAtIndexPath(indexPath) as TaskModel
         
         cell.taskLabel.text = theTask.task
         cell.descriptionLabel.text = theTask.subTask
@@ -141,25 +125,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        let thisTask = baseArray[indexPath.section][indexPath.row]
+        let thisTask = fechedResultsController.objectAtIndexPath(indexPath) as TaskModel
         
         if indexPath.section == 0 {
-            var newTask = TaskModel(task: thisTask.task, subTask: thisTask.subTask, date: thisTask.date, completed: true)
-            baseArray[1].append(newTask)
+            thisTask.completed = true
         }
         else if indexPath.section == 1 {
-            var newTask = TaskModel(task: thisTask.task, subTask: thisTask.subTask, date: thisTask.date, completed: false)
-            baseArray[0].append(newTask)
-            
+            thisTask.completed = false
         }
         
-        baseArray[indexPath.section].removeAtIndex(indexPath.row)
+        (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
+    }
+    
+    
+    //NSFechedResultsControllerDelegate
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.reloadData()
     }
     
 // Helpers
     
-   
+    func taskFetchRequest() -> NSFetchRequest {
+        let fetchRequest = NSFetchRequest(entityName: "TaskModel")
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        let completedDescriptor = NSSortDescriptor(key: "completed", ascending: true)
+
+        fetchRequest.sortDescriptors = [completedDescriptor,sortDescriptor]
+        
+        return fetchRequest
+        
+    }
+    
+    func getFetchedResultsController() -> NSFetchedResultsController {
+        
+        fechedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: "completed", cacheName: nil)
+        return fechedResultsController
+    }
 
 }
 
