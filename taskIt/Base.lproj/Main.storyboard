@@ -16,11 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Pfv-b1-XrP">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Pfv-b1-XrP">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="myCell" rowHeight="75" id="xyZ-pk-o76" customClass="TaskCell" customModule="taskIt" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="myCell" rowHeight="70" id="xyZ-pk-o76" customClass="TaskCell" customModule="taskIt" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xyZ-pk-o76" id="ntF-UM-QeM">
@@ -41,7 +42,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="15" y="26" width="243" height="21"/>
+                                                        <rect key="frame" x="15" y="23" width="243" height="21"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hka-3h-mWl">
@@ -78,7 +79,7 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                                    <rect key="frame" x="-5" y="0.0" width="320" height="580"/>
                                 </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Ics-0o-IKZ"/>
@@ -183,10 +184,10 @@
             </objects>
             <point key="canvasLocation" x="1630.5" y="776.25"/>
         </scene>
-        <!--Add Task View Controller-->
+        <!--Add Task-->
         <scene sceneID="Hm9-7U-jXt">
             <objects>
-                <viewController id="Bdm-6U-1hJ" customClass="AddTaskViewController" customModule="taskIt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Task" id="Bdm-6U-1hJ" customClass="AddTaskViewController" customModule="taskIt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RZW-2L-pFS"/>
                         <viewControllerLayoutGuide type="bottom" id="RyK-6r-IbS"/>

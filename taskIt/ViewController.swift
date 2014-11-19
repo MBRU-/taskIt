@@ -63,7 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
     
-    // called before segue to detailTaskVieController occurs
+    // called before segue to ViewControllers occurs
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "showTaskDetail" {
@@ -80,11 +80,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    @IBAction func addButtonTapped(sender: UIBarButtonItem) {
-     
-        self.performSegueWithIdentifier("showTaskAdd", sender: self)
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: TaskCell = tableView.dequeueReusableCellWithIdentifier("myCell") as TaskCell
@@ -93,9 +88,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.taskLabel.text = theTask.task
         cell.descriptionLabel.text = theTask.subTask
         cell.dateLabel.text = Date.toString(date: theTask.date)
-        
+                
         return cell
     }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            cell.backgroundColor = UIColor.greenColor()
+        }
+        else if indexPath.section == 0 {
+            cell.backgroundColor = UIColor.yellowColor()
+            
+        }
+    }
+    
+    
+    @IBAction func addButtonTapped(sender: UIBarButtonItem) {
+        
+        self.performSegueWithIdentifier("showTaskAdd", sender: self)
+    }
+    
+   
     
     //UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -138,6 +150,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         else if indexPath.section == 1 {
             var newTask = TaskModel(task: thisTask.task, subTask: thisTask.subTask, date: thisTask.date, completed: false)
             baseArray[0].append(newTask)
+            
         }
         
         baseArray[indexPath.section].removeAtIndex(indexPath.row)

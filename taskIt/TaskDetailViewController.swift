@@ -24,7 +24,6 @@ class TaskDetailViewController: UIViewController {
         taskTextField.text = self.detailTaskModel.task
         subTaskTextField.text = detailTaskModel.subTask
         dueDatePicker.date = detailTaskModel.date
-        println("PickerMode: \(dueDatePicker.datePickerMode.rawValue)")
         dueDatePicker.datePickerMode = UIDatePickerMode.Date
     }
 
