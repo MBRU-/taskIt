@@ -27,6 +27,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
 
+    
     override  func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -59,9 +60,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             detailVC.detailTaskModel = thisTask
             
         }
-//        else if segue.identifier == "showTaskAdd" {
-//            let addTaskVC: AddTaskViewController = segue.destinationViewController as AddTaskViewController
-//        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -76,15 +74,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1 {
+        let thisTask = fechedResultsController.objectAtIndexPath(indexPath) as TaskModel
+        if thisTask.completed == true {
             cell.backgroundColor = UIColor.greenColor()
         }
-        else if indexPath.section == 0 {
-            cell.backgroundColor = UIColor.yellowColor()
-            
+        else {
+             cell.backgroundColor = UIColor.yellowColor()
         }
+        
     }
-    
+
     
     @IBAction func addButtonTapped(sender: UIBarButtonItem) {
         
@@ -105,7 +104,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        
+        if fechedResultsController.sections?.count == 1 {
+            let fetchedObjects = fechedResultsController.fetchedObjects!
+            let testTask = fetchedObjects[0] as TaskModel
+            if testTask.completed == true {
+                return "Completed"
+            }
+            else {
+                return "To Do"
+            }
+        } else if section == 0 {
             return "To Do"
         }
         else {
@@ -114,24 +123,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String! {
-        if indexPath.section == 0 {
-            return "completed"
-        }
-        else {
+ 
+        let thisTask = fechedResultsController.objectAtIndexPath(indexPath) as TaskModel
+        if thisTask.completed == true {
             return "re-activate"
         }
+        else {
+            return "completed"
+        }
+
     }
     
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         let thisTask = fechedResultsController.objectAtIndexPath(indexPath) as TaskModel
-        
-        if indexPath.section == 0 {
-            thisTask.completed = true
-        }
-        else if indexPath.section == 1 {
+        if thisTask.completed == true {
             thisTask.completed = false
+        }
+        else {
+            thisTask.completed = true
         }
         
         (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
