@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, TaskDetailViewControllerDelegate, AddTaskViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!)
         
         fechedResultsController = getFetchedResultsController()
         fechedResultsController.delegate = self
@@ -56,9 +57,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let detailVC: TaskDetailViewController = segue.destinationViewController as TaskDetailViewController
             let indexPath = self.tableView.indexPathForSelectedRow()
             let thisTask = fechedResultsController.objectAtIndexPath(indexPath!) as TaskModel
-            
+            detailVC.delegate = self
             detailVC.detailTaskModel = thisTask
             
+        }
+        else if segue.identifier == "showTaskAdd" {
+            let addTaskVC: AddTaskViewController = segue.destinationViewController as AddTaskViewController
+            addTaskVC.delegate = self
+            println("prpared for segue: showTaskAdd")
         }
     }
     
@@ -121,7 +127,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return "Completed"
         }
     }
-    
+        
     func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String! {
  
         let thisTask = fechedResultsController.objectAtIndexPath(indexPath) as TaskModel
@@ -173,5 +179,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return fechedResultsController
     }
 
+    //TaskViewControllerDelegate
+     func taskDetailEdited() {
+        showAlert()
+    }
+
+    //AddTaskViewControllerDelegate
+    func addTaskCanceled(message: String) {
+        showAlert(message: message)
+    }
+    
+    func addTask(message: String) {
+        showAlert(message: message)
+    }
+    
+    
+    func showAlert (message: String = "Congratulations") {
+        var alert = UIAlertController(title: "Change Made!", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok!", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    
 }
 
